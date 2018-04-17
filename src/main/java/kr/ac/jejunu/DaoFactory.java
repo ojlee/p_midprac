@@ -29,7 +29,7 @@ public class DaoFactory {
         try {
             dataSource.setDriverClass((Class<? extends Driver>) Class.forName(className));
         } catch (ClassNotFoundException e) {
-            new RuntimeException(e); //  ,보통 이상태에서 반드시 예외되야 하는것은 이것을 상속받아 throw로 처리
+            new RuntimeException(e); // throws를 안해도 예외를 받을 수  있다, 보통 이상태에서 반드시 예외되야 하는것은 이것을 상속받아 throw로 처리
         }
         dataSource.setUrl(url);
         dataSource.setUsername(username);
