@@ -7,6 +7,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.sql.SQLException;
 
+
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertEquals;
 
 public class ProductDaoTest {
@@ -35,14 +37,44 @@ public class ProductDaoTest {
     @Test
     public void add() throws SQLException, ClassNotFoundException {
         Product product = new Product();
-        product.setTitle("다금바리");
-        product.setPrice(200000);
-        Long id = productDao.insert(product);
+        Long id = insertedProductTest(product);
 
         Product insertedProduct = productDao.get(id);
         assertEquals(insertedProduct.getId(), id);
         assertEquals(insertedProduct.getTitle(), product.getTitle());
         assertEquals(insertedProduct.getPrice(), product.getPrice());
+    }
+    @Test
+    public void update() throws SQLException, ClassNotFoundException {
+        Product product = new Product();
+        Long id = insertedProductTest(product);
+
+        product.setId(id);
+        product.setTitle("흑돼지고기");
+        product.setPrice(40000);
+        productDao.update(product);
+
+        Product updatedProduct = productDao.get(id);
+        assertEquals(updatedProduct.getId(), product.getId());
+        assertEquals(updatedProduct.getTitle(), product.getTitle());
+        assertEquals(updatedProduct.getPrice(), product.getPrice());
+    }
+
+    private Long insertedProductTest(Product product) throws SQLException, ClassNotFoundException {
+        product.setTitle("다금바리");
+        product.setPrice(200000);
+        return productDao.insert(product);
+    }
+
+    @Test
+    public void delete() throws SQLException, ClassNotFoundException {
+        Product product = new Product();
+        Long id = insertedProductTest(product);
+
+        productDao.delete(id);
+
+        Product deletedProduct = productDao.get(id);
+        assertEquals(deletedProduct, null);
     }
 
 }
