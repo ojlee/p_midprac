@@ -5,6 +5,7 @@ public class Product {
     private String title;
     private Integer price;
 
+
     public Long getId() {
         return id;
     }
