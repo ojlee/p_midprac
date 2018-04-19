@@ -28,7 +28,7 @@ public class ProductDao {
     }
 
     public void delete(Long id) throws SQLException {
-        String sql = "DELETE  FROM  product WHERE id = ?";
+        String sql = "DELETE FROM product WHERE id = ?";
         Object[] params = new Object[]{id};
         jdbcContext.update(sql, params);
     }
